@@ -2,6 +2,7 @@
 /node_modules
 /.pnp
 .pnp.js
+/client/node_modules
 
 # Environment variables
 .env
@@ -20,9 +21,11 @@ yarn-error.log*
 # Build files
 /build
 /dist
+/client/build
 
 # Coverage directory used by tools like istanbul
 /coverage
+/client/coverage
 
 # IDE and editor folders
 /.idea
