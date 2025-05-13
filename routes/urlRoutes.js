@@ -8,7 +8,8 @@ router.post('/shorten', urlController.shortenUrl);
 // Route to get all URLs
 router.get('/all', urlController.getAllUrls);
 
-// Route to redirect to original URL - This will be accessed via the root path
+// Route to redirect to original URL 
+// This will be accessed via the root path
 // and is handled in index.js
 router.get('/:urlId', urlController.redirectToUrl);
 
