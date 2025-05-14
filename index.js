@@ -30,23 +30,13 @@ app.get('/api/info', (req, res) => {
   });
 });
 
-// Serve static files from React app in production
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, 'client/build')));
+// Serve static files from React app
+app.use(express.static(path.join(__dirname, 'client/build')));
 
-  // For any route not handled by API or redirects, serve the React app
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
-  });
-} else {
-  // In development, serve the React files from the client build
-  app.use(express.static(path.join(__dirname, 'client/build')));
-  
-  // For the root path in development, serve the React app
-  app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
-  });
-}
+// For any route not handled by API or redirects, serve the React app
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+});
 
 // Connect to MongoDB
 const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost:27017/urlShortener";
