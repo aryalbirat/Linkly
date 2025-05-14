@@ -1,3 +1,7 @@
+/**
+ * URL Routes
+ * Defines the API endpoints for URL shortening and retrieval
+ */
 const express = require('express');
 const router = express.Router();
 const urlController = require('../controllers/urlController');

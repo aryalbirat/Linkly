@@ -1,3 +1,4 @@
+// Component for displaying the shortened URL with copy feature
 import React, { useState } from 'react';
 
 const ShortenedUrl = ({ shortenedUrl, originalUrl }) => {
@@ -8,25 +9,22 @@ const ShortenedUrl = ({ shortenedUrl, originalUrl }) => {
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
-
   return (
-    <div className="mt-5 p-4 bg-green-50 rounded-md border border-green-200">
-      <h2 className="text-lg font-medium text-gray-800 mb-2">Your shortened URL:</h2>
+    <div className="p-5 bg-green-50 rounded-lg border border-green-200 shadow-sm">
+      <h2 className="text-lg font-medium text-gray-800 mb-3">Your shortened URL:</h2>
       <div className="flex">
         <input
           type="text"
           readOnly
           value={shortenedUrl}
-          className="flex-grow px-3 py-2 border border-gray-300 rounded-l-md focus:outline-none"
-        />
-        <button
+          className="flex-grow px-3 py-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-1 focus:ring-blue-500"
+        />        <button
           onClick={handleCopy}
-          className="px-4 py-2 bg-gray-200 text-gray-700 rounded-r-md hover:bg-gray-300 focus:outline-none"
+          className="px-4 py-2 bg-blue-100 text-blue-700 border border-blue-300 rounded-r-md hover:bg-blue-200 focus:outline-none focus:ring-1 focus:ring-blue-500 transition-colors"
         >
           {copied ? 'Copied!' : 'Copy'}
         </button>
-      </div>
-      <div className="mt-2">
+      </div>      <div className="mt-3">
         <span className="text-sm text-gray-600">
           Original URL:{' '}
           <a href={originalUrl} className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">

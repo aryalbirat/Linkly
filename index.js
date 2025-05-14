@@ -1,3 +1,7 @@
+/**
+ * URL Shortener Application
+ * Main server file that sets up Express, MongoDB connection, and routes
+ */
 require('dotenv').config();
 const express = require("express");
 const mongoose = require("mongoose");

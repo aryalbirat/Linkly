@@ -1,14 +1,22 @@
-// Import other dependencies with require as usual
+/**
+ * URL Controller
+ * Handles all URL shortening, retrieval, and redirection logic
+ */
 const Url = require('../models/url');
 
-// Function to get nanoid dynamically
+// Function to get nanoid dynamically (handles ESM import in CommonJS)
 let nanoidGenerate;
 (async () => {
   const { nanoid } = await import('nanoid');
   nanoidGenerate = nanoid;
 })();
 
-// Create a short URL
+/**
+ * Create a short URL
+ * @route POST /api/shorten
+ * @param {string} req.body.origUrl - The original URL to shorten
+ * @returns {object} The created URL object
+ */
 exports.shortenUrl = async (req, res) => {
   try {
     const { origUrl } = req.body;
@@ -38,8 +46,7 @@ exports.shortenUrl = async (req, res) => {
       shortUrl: `${baseUrl}/${urlId}`,
       date: new Date()
     });
-    
-    await url.save();
+      await url.save();
     return res.status(201).json(url);
   } catch (error) {
     console.error('Error shortening URL:', error);
@@ -47,18 +54,26 @@ exports.shortenUrl = async (req, res) => {
   }
 };
 
-// Get all URLs
+/**
+ * Get all URLs
+ * @route GET /api/all
+ * @returns {Array} Array of all URL objects
+ */
 exports.getAllUrls = async (req, res) => {
   try {
     const urls = await Url.find();
     return res.json(urls);
   } catch (error) {
-    console.error('Error getting all URLs:', error);
-    return res.status(500).json({ error: 'Server error' });
+    console.error('Error getting all URLs:', error);    return res.status(500).json({ error: 'Server error' });
   }
 };
 
-// Redirect to original URL
+/**
+ * Redirect to the original URL
+ * @route GET /:urlId
+ * @param {string} req.params.urlId - The short URL ID
+ * @returns {redirect} Redirects to the original URL
+ */
 exports.redirectToUrl = async (req, res) => {
   try {
     const { urlId } = req.params;

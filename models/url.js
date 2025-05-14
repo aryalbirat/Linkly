@@ -1,3 +1,7 @@
+/**
+ * URL Model
+ * Defines the schema for the URL shortening service
+ */
 const mongoose = require('mongoose');
 
 const urlSchema = new mongoose.Schema({

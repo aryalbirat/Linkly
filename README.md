@@ -36,13 +36,31 @@ npm install
 3. Create a `.env` file in the root directory with the following variables:
 ```
 MONGODB_URI=your_mongodb_connection_string
-BASE_URL=http://localhost:5000
-PORT=5000
+PORT=8000
+NODE_ENV=development
 ```
 
-4. Start the development server:
+4. Install and build the application:
 ```bash
+# On Windows
+build.bat
+
+# On Unix/Linux/MacOS
+npm install
+cd client && npm install && npm run build && cd ..
+```
+
+5. Start the development servers:
+```bash
+# On Windows
+dev.bat
+
+# On Unix/Linux/MacOS
+# Terminal 1 - Backend
 npm run dev
+
+# Terminal 2 - Frontend
+cd client && npm start
 ```
 
 ## Usage
