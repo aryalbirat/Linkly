@@ -1,5 +1,5 @@
 /**
- * URL Controller
+ * URL Controllers
  * Handles all URL shortening, retrieval, and redirection logic
  */
 const Url = require('../models/url');
