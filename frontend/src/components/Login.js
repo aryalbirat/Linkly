@@ -1,14 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
 export default function Login() {
-  const { login } = useAuth();
+  const { login, user, loading: authLoading } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user && !authLoading) {
+      navigate('/dashboard');
+    }
+  }, [user, authLoading, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -16,7 +22,7 @@ export default function Login() {
     setError(null);
     try {
       await login(email, password);
-      navigate('/dashboard');
+      // user state will update and useEffect will redirect
     } catch (err) {
       setError(err.response?.data?.error || 'Login failed');
     } finally {
@@ -37,7 +43,7 @@ export default function Login() {
           <label className="block mb-1 text-gray-300">Password</label>
           <input type="password" className="input-dark w-full p-3" value={password} onChange={e => setPassword(e.target.value)} required />
         </div>
-        <button type="submit" className="button-dark w-full py-3 mt-2" disabled={loading}>{loading ? 'Logging in...' : 'Login'}</button>
+        <button type="submit" className="button-dark w-full py-3 mt-2" disabled={loading || authLoading}>{loading || authLoading ? 'Logging in...' : 'Login'}</button>
         <div className="text-center mt-2">
           <a href="/register" className="text-blue-400 hover:underline">Don't have an account? Register</a>
         </div>

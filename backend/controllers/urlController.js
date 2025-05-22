@@ -4,12 +4,15 @@
  */
 const Url = require('../models/url');
 
-// Function to get nanoid dynamically (handles ESM import in CommonJS)
-let nanoidGenerate;
-(async () => {
-  const { nanoid } = await import('nanoid');
-  nanoidGenerate = nanoid;
-})();
+// Utility to get nanoid (sync for clarity)
+const getNanoid = () => {
+  try {
+    // Use require for CommonJS compatibility
+    return require('nanoid').nanoid;
+  } catch {
+    return () => Date.now().toString(36);
+  }
+};
 
 /**
  * Create a short URL
@@ -20,11 +23,17 @@ let nanoidGenerate;
 exports.shortenUrl = async (req, res) => {
   try {
     const { origUrl } = req.body;
-    if (!origUrl) return res.status(400).json({ error: 'Original URL is required' });
-    // Always associate with logged-in user
+    if (!origUrl || typeof origUrl !== 'string') {
+      return res.status(400).json({ error: 'Original URL is required' });
+    }
+    // Optionally: sanitize origUrl here
+    if (!req.user || !req.user._id) {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
     let url = await Url.findOne({ origUrl, user: req.user._id });
     if (url) return res.json(url);
-    const urlId = nanoidGenerate ? nanoidGenerate(6) : Date.now().toString(36);
+    const nanoid = getNanoid();
+    const urlId = nanoid(6);
     const baseUrl = `${req.protocol}://${req.get('host')}`;
     url = new Url({
       urlId,
@@ -42,12 +51,11 @@ exports.shortenUrl = async (req, res) => {
 };
 
 /**
- * Get all URLs
+ * Get all URLs (admin only)
  * @route GET /api/all
  * @returns {Array} Array of all URL objects
  */
 exports.getAllUrls = async (req, res) => {
-  // Only admin can access (enforced by route)
   try {
     const urls = await Url.find().populate('user', 'email');
     return res.json(urls);
@@ -64,6 +72,9 @@ exports.getAllUrls = async (req, res) => {
  */
 exports.getUserUrls = async (req, res) => {
   try {
+    if (!req.user || !req.user._id) {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
     const urls = await Url.find({ user: req.user._id });
     return res.json(urls);
   } catch (error) {
