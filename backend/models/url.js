@@ -23,6 +23,11 @@ const urlSchema = new mongoose.Schema({
     required: true,
     default: 0,
   },
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: false
+  },
   date: {
     type: Date,
     default: Date.now,

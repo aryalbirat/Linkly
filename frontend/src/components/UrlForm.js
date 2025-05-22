@@ -8,28 +8,28 @@ const UrlForm = ({ onSubmit, loading }) => {
     e.preventDefault();
     if (url) {
       onSubmit(url);
+      setUrl('');
     }
   };
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
-        <label htmlFor="original-url" className="block text-sm font-medium text-gray-700 mb-2">
+        <label htmlFor="original-url" className="block text-sm font-medium text-gray-300 mb-2">
           Enter your long URL
         </label>
         <input
           type="url"
           id="original-url"
-          className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+          className="input-dark w-full px-4 py-3"
           placeholder="https://example.com/very/long/url"
           value={url}
-          onChange={(e) => setUrl(e.target.value)}          required
+          onChange={(e) => setUrl(e.target.value)}
+          required
         />
       </div>
       <button
         type="submit"
-        className={`w-full py-3 px-4 border border-transparent rounded-md shadow-sm text-white font-medium bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200 ${
-          loading ? 'opacity-75 cursor-not-allowed' : ''
-        }`}
+        className={`button-dark w-full py-3 px-4 ${loading ? 'opacity-75 cursor-not-allowed' : ''}`}
         disabled={loading}
       >
         {loading ? (

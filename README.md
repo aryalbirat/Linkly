@@ -13,6 +13,14 @@ A simple and efficient URL shortening service built with Node.js, Express js, Re
 - Copy to clipboard functionality
 - Mobile-friendly design
 
+## Project Structure
+
+This project follows a separated frontend/backend structure:
+- `backend/`: Contains the Express.js API server
+- `frontend/`: Contains the React.js frontend application
+
+Each directory has its own `package.json` file and dependencies.
+
 ## Technology Stack
 
 - **Backend**: Node.js, Express
@@ -28,46 +36,59 @@ git clone https://github.com/yourusername/url-shortener.git
 cd url-shortener
 ```
 
-2. Install dependencies:
+2. Install dependencies for both frontend and backend:
 ```bash
+# Install backend dependencies
+cd backend
+npm install
+
+# Install frontend dependencies
+cd ../frontend
 npm install
 ```
 
-3. Create a `.env` file in the root directory with the following variables:
+3. Create a `.env` file in the backend directory with the following variables:
 ```
 MONGODB_URI=your_mongodb_connection_string
 PORT=8000
 NODE_ENV=development
 ```
 
-4. Install and build the application:
+## Running the Application
+
+### Development Mode
+
+Start the backend and frontend servers separately:
+
 ```bash
-# On Windows
-build.bat
-
-# On Unix/Linux/MacOS
-npm install
-cd client && npm install && npm run build && cd ..
-```
-
-5. Start the development servers:
-```bash
-# On Windows
-dev.bat
-
-# On Unix/Linux/MacOS
 # Terminal 1 - Backend
+cd backend
 npm run dev
 
 # Terminal 2 - Frontend
-cd client && npm start
+cd frontend
+npm start
+```
+
+### Production Mode
+
+For production deployment, you need to build the frontend and then serve it through the backend:
+
+```bash
+# Build the frontend
+cd frontend
+npm run build
+
+# Start the backend server
+cd ../backend
+npm start
 ```
 
 ## Usage
 
 ### Web Interface
 
-1. Access the web interface at `http://localhost:5000` (or your configured BASE_URL)
+1. Access the web interface at `http://localhost:3000` in development mode (or `http://localhost:8000` in production mode)
 2. Enter a long URL in the input field
 3. Click "Shorten" to generate a short URL
 4. Copy the shortened URL to share
@@ -90,7 +111,7 @@ Request body:
 Response:
 ```json
 {
-  "shortUrl": "http://localhost:5000/abc123",
+  "shortUrl": "http://localhost:8000/abc123",
   "longUrl": "https://example.com/very/long/url/that/needs/shortening",
   "urlCode": "abc123",
   "date": "2023-04-01T12:00:00.000Z",
@@ -101,14 +122,14 @@ Response:
 #### Get all URLs
 
 ```
-GET /api/urls
+GET /api/all
 ```
 
 Response:
 ```json
 [
   {
-    "shortUrl": "http://localhost:5000/abc123",
+    "shortUrl": "http://localhost:8000/abc123",
     "longUrl": "https://example.com/very/long/url/that/needs/shortening",
     "urlCode": "abc123",
     "date": "2023-04-01T12:00:00.000Z",
@@ -120,7 +141,7 @@ Response:
 #### Redirect to original URL
 
 ```
-GET /:code
+GET /:urlId
 ```
 
 Redirects to the original URL associated with the provided code.
@@ -129,15 +150,17 @@ Redirects to the original URL associated with the provided code.
 
 ```
 url-shortener/
-├── client/              # React frontend
+├── frontend/            # React frontend
 │   ├── public/          # Static files
-│   └── src/             # React source code
-├── config/              # Configuration files
-├── models/              # Database models
-├── routes/              # API routes
-├── .env                 # Environment variables
-├── server.js            # Express server
-└── package.json         # Project dependencies
+│   ├── src/             # React source code
+│   └── package.json     # Frontend dependencies
+├── backend/             # Express backend
+│   ├── controllers/     # API controllers
+│   ├── models/          # Database models
+│   ├── routes/          # API routes
+│   ├── public/          # Static files
+│   └── package.json     # Backend dependencies
+└── README.md            # Project documentation
 ```
 
 ## License

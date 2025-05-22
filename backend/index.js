@@ -8,6 +8,8 @@ const mongoose = require("mongoose");
 const urlRoutes = require("./routes/urlRoutes");
 const urlController = require('./controllers/urlController');
 const path = require('path');
+const authRoutes = require('./routes/authRoutes');
+const adminRoutes = require('./routes/adminRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 8000;
@@ -18,6 +20,8 @@ app.use(express.urlencoded({ extended: true }));
 
 // API Routes with /api prefix
 app.use('/api', urlRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/admin', adminRoutes);
 
 // URL redirect route (must be before the static files middleware)
 app.get('/:urlId', urlController.redirectToUrl);
@@ -35,11 +39,11 @@ app.get('/api/info', (req, res) => {
 });
 
 // Serve static files from React app
-app.use(express.static(path.join(__dirname, 'client/build')));
+app.use(express.static(path.join(__dirname, '../frontend/build')));
 
 // For any route not handled by API or redirects, serve the React app
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+  res.sendFile(path.join(__dirname, '../frontend/build', 'index.html'));
 });
 
 // Connect to MongoDB

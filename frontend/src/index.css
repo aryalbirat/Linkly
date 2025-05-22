@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply bg-gray-900 text-gray-100;
+}
+
+/* Custom dark card and input styles */
+.card-dark {
+  @apply bg-gray-800 border border-gray-700 rounded-lg shadow-lg;
+}
+.input-dark {
+  @apply bg-gray-900 border border-gray-700 text-gray-100 placeholder-gray-400 focus:ring-blue-500 focus:border-blue-500;
+}
+.button-dark {
+  @apply bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded shadow transition;
+}
+.sidebar-dark {
+  @apply bg-gray-950 border-r border-gray-800;
+}

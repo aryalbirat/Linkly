@@ -19,26 +19,29 @@ const UrlList = ({ urls }) => {
   };
   return (
     <div className="mt-8">
-      <h2 className="text-xl font-semibold text-gray-800 mb-4 border-b pb-2">Recent URLs</h2>
+      <h2 className="text-xl font-semibold text-blue-200 mb-4 border-b border-gray-700 pb-2">Recent URLs</h2>
       {urls.length === 0 ? (
-        <p className="text-gray-500">No URLs shortened yet</p>
-      ) : (        <div className="space-y-3">          {urls.map((url, index) => (
+        <p className="text-gray-400">No URLs shortened yet</p>
+      ) : (
+        <div className="space-y-3">
+          {urls.map((url, index) => (
             <a
               key={url._id || index}
               href={url.shortUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="block p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors duration-150 hover:shadow-sm"
+              className="block p-4 card-dark hover:bg-gray-700 transition-colors duration-150 hover:shadow-md"
             >
-              <div className="flex justify-between items-start">                <h3 className="font-medium text-gray-900">
+              <div className="flex justify-between items-start">
+                <h3 className="font-medium text-gray-100">
                   {truncateText(url.origUrl, 40)}
                 </h3>
-                <span className="text-sm bg-blue-100 text-blue-800 py-1 px-2 rounded-md">
+                <span className="text-sm bg-blue-900 text-blue-200 py-1 px-2 rounded-md">
                   {url.clicks} click{url.clicks !== 1 ? 's' : ''}
                 </span>
               </div>
-              <p className="text-blue-600 mt-1 font-medium">{url.shortUrl}</p>
-              <span className="text-xs text-gray-500 mt-2 block">
+              <p className="text-blue-400 mt-1 font-medium">{url.shortUrl}</p>
+              <span className="text-xs text-gray-400 mt-2 block">
                 Created: {formatDate(url.date)}
               </span>
             </a>
