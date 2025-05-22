@@ -1,156 +1,141 @@
 # URL Shortener
 
-A simple and efficient URL shortening service built with Node.js, Express js, React js and MongoDB. This application allows users to create shortened URLs, track click statistics, and manage their links through a clean, responsive interface.
+A secure, modern, and efficient URL shortening service built with Node.js, Express, React, and MongoDB. Users can create and manage their own short links, track analytics, and enjoy a privacy-focused, responsive interface.
 
 ## Features
 
 - Shorten long URLs to easily shareable links
-- Track click counts for each shortened URL
-- View all created short URLs
+- User authentication with JWT (secure login/register)
+- Each user sees only their own links (privacy enforced)
+- Track click counts and analytics for each URL
+- Admin analytics dashboard (users, URLs, clicks, clicks-over-time)
+- Python analytics script for advanced charting
 - Clean RESTful API design
-- Modern, responsive UI built with React
-- Real-time validation
+- Modern, accessible UI (React + Tailwind, dark mode, high contrast)
+- Real-time validation and password visibility toggle
 - Copy to clipboard functionality
 - Mobile-friendly design
 
 ## Technology Stack
 
-- **Backend**: Node.js, Express
+- **Backend**: Node.js, Express, MongoDB, JWT
 - **Frontend**: React, Tailwind CSS
-- **Database**: MongoDB
+- **Analytics**: Python (matplotlib)
 - **Deployment**: Docker support (optional)
 
 ## Installation
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/url-shortener.git
-cd url-shortener
+# Backend/monorepo
+ git clone https://github.com/yourusername/url-shortener.git
+ cd url-shortener
 ```
 
 2. Install dependencies:
 ```bash
-npm install
+# Backend
+cd backend && npm install
+# Frontend
+cd ../frontend && npm install
 ```
 
-3. Create a `.env` file in the root directory with the following variables:
+3. Create a `.env` file in both `backend/` and `frontend/` directories (see `.env.example` if present):
 ```
+# backend/.env
 MONGODB_URI=your_mongodb_connection_string
 PORT=8000
+JWT_SECRET=your_jwt_secret
 NODE_ENV=development
+
+# frontend/.env
+REACT_APP_API_URL=http://localhost:8000
 ```
 
-4. Install and build the application:
+4. Start the development servers:
 ```bash
-# On Windows
-build.bat
-
-# On Unix/Linux/MacOS
-npm install
-cd client && npm install && npm run build && cd ..
-```
-
-5. Start the development servers:
-```bash
-# On Windows
-dev.bat
-
-# On Unix/Linux/MacOS
 # Terminal 1 - Backend
-npm run dev
-
+cd backend && npm run dev
 # Terminal 2 - Frontend
-cd client && npm start
+cd frontend && npm start
+```
+
+5. (Optional) Run analytics chart script:
+```bash
+cd analytics
+python analytics_charts.py
 ```
 
 ## Usage
 
 ### Web Interface
 
-1. Access the web interface at `http://localhost:5000` (or your configured BASE_URL)
-2. Enter a long URL in the input field
-3. Click "Shorten" to generate a short URL
-4. Copy the shortened URL to share
+1. Access the web interface at `http://localhost:3000` (or your configured frontend port)
+2. Register/login to your account
+3. Shorten URLs, view/copy your links, and see analytics
+4. Admins can view global analytics and charts
 
-### API Endpoints
+### API Endpoints (JWT required for most)
 
 #### Shorten a URL
-
 ```
 POST /api/shorten
+Authorization: Bearer <JWT>
 ```
-
-Request body:
+Body:
 ```json
 {
-  "longUrl": "https://example.com/very/long/url/that/needs/shortening"
+  "origUrl": "https://example.com/very/long/url"
 }
 ```
 
-Response:
-```json
-{
-  "shortUrl": "http://localhost:5000/abc123",
-  "longUrl": "https://example.com/very/long/url/that/needs/shortening",
-  "urlCode": "abc123",
-  "date": "2023-04-01T12:00:00.000Z",
-  "clicks": 0
-}
+#### Get your URLs
+```
+GET /api/my
+Authorization: Bearer <JWT>
 ```
 
-#### Get all URLs
-
+#### Admin analytics (admin only)
 ```
-GET /api/urls
-```
-
-Response:
-```json
-[
-  {
-    "shortUrl": "http://localhost:5000/abc123",
-    "longUrl": "https://example.com/very/long/url/that/needs/shortening",
-    "urlCode": "abc123",
-    "date": "2023-04-01T12:00:00.000Z",
-    "clicks": 5
-  }
-]
+GET /api/admin/analytics
+GET /api/admin/clicks-over-time
+Authorization: Bearer <JWT>
 ```
 
 #### Redirect to original URL
-
 ```
 GET /:code
 ```
-
-Redirects to the original URL associated with the provided code.
 
 ## Project Structure
 
 ```
 url-shortener/
-├── client/              # React frontend
-│   ├── public/          # Static files
-│   └── src/             # React source code
-├── config/              # Configuration files
-├── models/              # Database models
-├── routes/              # API routes
-├── .env                 # Environment variables
-├── server.js            # Express server
-└── package.json         # Project dependencies
+├── backend/                # Node/Express backend
+│   ├── controllers/        # Controllers
+│   ├── middleware/         # JWT/auth middleware
+│   ├── models/             # Mongoose models
+│   ├── routes/             # API routes
+│   ├── public/             # Static files
+│   └── ...
+├── frontend/               # React frontend
+│   ├── src/                # Components, contexts, styles
+│   └── ...
+├── analytics/              # Python analytics scripts
+│   └── analytics_charts.py # Charting for admin
+├── .gitignore              # Optimized for Node, React, Python
+└── ...
 ```
+
+## Security & Privacy
+- All user actions require JWT authentication
+- Users can only access their own data
+- Admin endpoints are protected
+- Secrets are stored in `.env` (never commit to git)
 
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-Copyright (c) 2023 Birat Aryal
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ## Acknowledgements
 
@@ -158,3 +143,4 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 - [MongoDB](https://www.mongodb.com/)
 - [React](https://reactjs.org/)
 - [Tailwind CSS](https://tailwindcss.com/)
+- [matplotlib](https://matplotlib.org/)
