@@ -5,7 +5,7 @@ import UrlForm from './UrlForm';
 import ShortenedUrl from './ShortenedUrl';
 import UrlList from './UrlList';
 
-const UrlShortener = () => {
+const linkly = () => {
   const { token } = useAuth();
   const [originalUrl, setOriginalUrl] = useState('');
   const [shortenedUrl, setShortenedUrl] = useState('');
@@ -77,4 +77,4 @@ const UrlShortener = () => {
   );
 };
 
-export default UrlShortener;
+export default linkly;

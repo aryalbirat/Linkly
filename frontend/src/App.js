@@ -5,7 +5,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import Login from './components/Login';
 import Register from './components/Register';
 import Dashboard from './components/Dashboard';
-import UrlShortener from './components/UrlShortener';
+import linkly from './components/linkly';
 
 function App() {
   return (

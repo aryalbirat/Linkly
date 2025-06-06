@@ -1,5 +1,5 @@
 /**
- * URL Shortener Application
+ * Linkly Application
  * Main server file that sets up Express, MongoDB connection, and routes
  */
 require('dotenv').config();
@@ -25,7 +25,7 @@ app.get('/:urlId', urlController.redirectToUrl);
 // Simple API info
 app.get('/api/info', (req, res) => {
   res.json({
-    message: "URL Shortener API",
+    message: "Linkly API",
     endpoints: {
       createShortUrl: "POST /api/shorten",
       getAllUrls: "GET /api/all",
@@ -43,7 +43,7 @@ app.get('*', (req, res) => {
 });
 
 // Connect to MongoDB
-const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost:27017/urlShortener";
+const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost:27017/linkly";
 mongoose.connect(MONGODB_URI)
   .then(() => console.log("MongoDB connected"))
   .catch(err => {
