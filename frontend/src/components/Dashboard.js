@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
-import linkly from './linkly';
+import Linkly from './UrlShortener';
 import DashboardProfile from './DashboardProfile';
 
 const tabs = [
@@ -77,7 +77,7 @@ export default function Dashboard() {
         <button onClick={handleLogout} className="mt-8 button-dark w-full">Logout</button>
       </aside>
       <main className="flex-1 flex flex-col items-center justify-center p-8 bg-gray-900 min-h-screen">
-        {activeTab === 'shorten' && <linkly />}
+        {activeTab === 'shorten' && <Linkly />}
         {activeTab === 'analytics' && <DashboardAnalytics />}
         {activeTab === 'profile' && <DashboardProfile />}
       </main>
