@@ -17,4 +17,7 @@ router.get('/all', auth, admin, urlController.getAllUrls);
 // Route to get all URLs for the current user
 router.get('/my', auth, urlController.getUserUrls);
 
+// Route to get clicks over time data for the current user
+router.get('/clicks-over-time', auth, urlController.getUserClicksOverTime);
+
 module.exports = router;

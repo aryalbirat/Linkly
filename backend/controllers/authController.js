@@ -1,30 +1,81 @@
 const User = require('../models/user');
 const jwt = require('jsonwebtoken');
 
+// Default JWT secret if not set in environment variables
+const JWT_SECRET = process.env.JWT_SECRET || 'linkly_default_secret_key_for_development';
+
 exports.register = async (req, res) => {
   const { email, password, name, role } = req.body;
+  
+  // Validate input
+  if (!email || !password) {
+    return res.status(400).json({ error: 'Email and password are required' });
+  }
+  
   try {
+    console.log(`Attempting to register user with email: ${email}`);
+    
     const existing = await User.findOne({ email });
-    if (existing) return res.status(400).json({ error: 'User already exists' });
-    const user = new User({ email, password, name, role });
+    if (existing) {
+      console.log(`User with email ${email} already exists`);
+      return res.status(400).json({ error: 'User already exists' });
+    }
+
+    const user = new User({ email, password, name, role: role || 'user' });
     await user.save();
-    res.status(201).json({ message: 'User registered' });
+    
+    console.log(`User registered successfully: ${email}`);
+    res.status(201).json({ message: 'User registered successfully' });
   } catch (err) {
-    res.status(500).json({ error: 'Server error' });
+    console.error('Registration error:', err);
+    res.status(500).json({ error: 'Server error during registration' });
   }
 };
 
 exports.login = async (req, res) => {
   const { email, password } = req.body;
+  
+  // Validate input
+  if (!email || !password) {
+    return res.status(400).json({ error: 'Email and password are required' });
+  }
+  
   try {
+    console.log(`Attempting login for user: ${email}`);
+    
     const user = await User.findOne({ email });
-    if (!user) return res.status(400).json({ error: 'Invalid credentials' });
+    if (!user) {
+      console.log(`No user found with email: ${email}`);
+      return res.status(400).json({ error: 'Invalid credentials' });
+    }
+
     const isMatch = await user.comparePassword(password);
-    if (!isMatch) return res.status(400).json({ error: 'Invalid credentials' });
-    const payload = { id: user._id, role: user.role };
-    const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' });
-    res.json({ token });
+    if (!isMatch) {
+      console.log(`Invalid password for user: ${email}`);
+      return res.status(400).json({ error: 'Invalid credentials' });
+    }
+    
+    const payload = { 
+      id: user._id, 
+      role: user.role,
+      email: user.email,
+      name: user.name
+    };
+    
+    const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '24h' });
+    console.log(`Login successful for user: ${email}`);
+    
+    res.json({ 
+      token,
+      user: {
+        id: user._id,
+        email: user.email,
+        name: user.name,
+        role: user.role
+      }
+    });
   } catch (err) {
-    res.status(500).json({ error: 'Server error' });
+    console.error('Login error:', err);
+    res.status(500).json({ error: 'Server error during login' });
   }
 };
