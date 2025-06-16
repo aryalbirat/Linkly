@@ -1,4 +1,4 @@
-# Linkly – Secure URL Shortener with Built-in Analytics🔗
+# Linkly – Privacy-First URL Shortener with Built-in Analytics🔗
 
 [![Node.js](https://img.shields.io/badge/Node.js-v16+-green.svg)](https://nodejs.org/)
 [![React](https://img.shields.io/badge/React-v18+-blue.svg)](https://reactjs.org/)
