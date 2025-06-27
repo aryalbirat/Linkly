@@ -8,8 +8,6 @@
 
 A secure, modern, and efficient URL shortening service built with Node.js, Express, React, and MongoDB. Users can create and manage their own short links, track analytics, and enjoy a privacy-focused, responsive interface.
 
-
-
 ## ✨ Features
 
 - **Link Management**
