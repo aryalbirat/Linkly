@@ -164,7 +164,7 @@ linkly/
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🙏 Acknowledgements
+## 🙏 Acknowledgements.
 
 - [Express.js](https://expressjs.com/) - Fast, unopinionated, minimalist web framework
 - [MongoDB](https://www.mongodb.com/) - Document database
