@@ -1,9 +1,4 @@
-/**
- * URL Model
- * Defines the schema for the URL shortening service
- */
-const mongoose = require('mongoose');
-
+const mongoose = require("mongoose");
 const urlSchema = new mongoose.Schema({
   urlId: {
     type: String,
@@ -23,15 +18,15 @@ const urlSchema = new mongoose.Schema({
     required: true,
     default: 0,
   },
-  user: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    required: false
-  },
   date: {
     type: Date,
-    default: Date.now,
+    required: true,
+  },
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: false,
   },
 });
 
-module.exports = mongoose.model('Url', urlSchema);
+module.exports = mongoose.model("Url", urlSchema);
