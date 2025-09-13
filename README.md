@@ -1,4 +1,4 @@
-# Linkly 🔗
+# Linkly – Privacy-First URL Shortener with Built-in Analytics
 
 [![Node.js](https://img.shields.io/badge/Node.js-v16+-green.svg)](https://nodejs.org/)
 [![React](https://img.shields.io/badge/React-v18+-blue.svg)](https://reactjs.org/)
@@ -8,9 +8,7 @@
 
 A secure, modern, and efficient URL shortening service built with Node.js, Express, React, and MongoDB. Users can create and manage their own short links, track analytics, and enjoy a privacy-focused, responsive interface.
 
-
-
-## ✨ Features
+## ✨Features
 
 - **Link Management**
   - Shorten long URLs to easily shareable links
@@ -166,7 +164,7 @@ linkly/
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🙏 Acknowledgements
+## 🙏 Acknowledgements.
 
 - [Express.js](https://expressjs.com/) - Fast, unopinionated, minimalist web framework
 - [MongoDB](https://www.mongodb.com/) - Document database

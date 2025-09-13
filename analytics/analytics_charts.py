@@ -4,7 +4,7 @@ from datetime import datetime
 import sys
 import json
 
-# Replace with your actual admin JWT token
+# Replace with your actual admin JWT tokens
 TOKEN = "YOUR_ADMIN_JWT_TOKEN"
 API_URL = "http://localhost:8000/api/admin/clicks-over-time"
 
