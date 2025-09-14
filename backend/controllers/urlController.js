@@ -9,12 +9,7 @@ exports.shortenUrl = async (req, res) => {
     if (!origUrl || typeof origUrl !== "string") {
       return res.json({ error: "Original URL is required" });
     }
-
-    // Check whether it is user or not
-    if (!req.user || !req.user._id) {
-      return res.json({ error: "Unauthorized" });
-    }
-
+    
     let url = await Url.findOne({ origUrl, user: req.user._id });
     if (url) return res.json(url);
 
